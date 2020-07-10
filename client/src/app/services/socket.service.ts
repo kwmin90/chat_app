@@ -19,4 +19,14 @@ export class SocketService {
   sendMessage(message: string){
     this.socket.emit('message', message);
   }
+  getUser(){
+    return Observable.create((observer)=>{
+      this.socket.on('user', (user)=>{
+        observer.next(user);
+      });
+    });
+  }
+  sendUsername(user: string){
+    this.socket.emit('user', user);
+  }
 }

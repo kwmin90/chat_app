@@ -1,0 +1,30 @@
+.container{
+    border-style:solid;
+    max-width:800px;
+}
+#chat-header{
+    border-style:solid;
+}
+#chat-user{
+    border-style:solid;
+    overflow-y: scroll;
+    height:200px;
+}
+#chat-message{
+    border-style:solid;
+    overflow-y: scroll;
+    height:200px;
+}
+#chat-input{
+    border-style:solid;
+    display: -webkit-flex;
+}
+#chat-main{
+    height:230px;
+}
+ul{
+    list-style: none;
+}
+input{
+    -webkit-flex:1;
+}

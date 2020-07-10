@@ -1,8 +1,22 @@
 <div class="container">
-  <div *ngFor="let message of messageList">
-    {{message}}
+  <div class="row" id="chat-header">
+    <h3>Live Chat App</h3>
   </div>
-  
-  <input [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()" />
-  <button (click)="sendMessage()">Send Message</button>
+  <div class="row" id="chat-main">
+    <div class="col-3" id="chat-user">
+      <h6>Connected Users</h6>
+      <div *ngFor="let user of usersList">
+        {{user}}
+      </div>
+    </div>
+    <div class="col" id="chat-message"> 
+      <div *ngFor="let message of messageList">
+        {{message}}
+      </div>
+    </div>
+  </div>
+  <div class="row" id="chat-input">
+    <input [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()" />
+    <button (click)="sendMessage()">Send Message</button>
+  </div>
 </div>

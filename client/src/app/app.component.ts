@@ -10,10 +10,16 @@ export class AppComponent{
   title = 'client';
   newMessage: string;
   messageList: string[] = [];
+  usersList: string[] = [];
 
   constructor(private socketService: SocketService){}
 
   ngOnInit(){
+    this.getUsernameAndSend();
+    this.socketService.getUser()
+      .subscribe((user:string)=>{
+        this.usersList.push(user);
+      });
     this.socketService.getMessage()
       .subscribe((message: string)=>{
         this.messageList.push(message);
@@ -21,10 +27,13 @@ export class AppComponent{
   }
 
   sendMessage(){
-    console.log(this.newMessage);
     this.socketService.sendMessage(this.newMessage);
     this.newMessage= '';
     
     console.log(this.messageList);
+  }
+  getUsernameAndSend(){
+    let user = prompt("Please enter your username", "harry potter");
+    this.socketService.sendUsername(user);
   }
 }
