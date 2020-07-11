@@ -7,10 +7,35 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 io.on('connection', socket =>{
-    console.log('user connected');
+    const users:any[] = [];
+    socket.on('username', (username: string)=>{
+        const user = {id: socket.id, username: username}
+        users.push(user);
+        socket.emit('message', 'Welcome to Chat App');
+        socket.broadcast.emit('message', `${user.username} has joined the chat`);
+        console.log(users);
+        io.emit('allUsers', {
+            users: users
+        });
+    });
 
     socket.on('message', (message: string)=>{
-        io.emit('message', message);
+        const user = users.find(user=>user.id === socket.id)
+        io.emit('message', `${user.username}: ${message}`);
+    });
+
+    socket.on('disconnect', ()=>{
+        const index = users.findIndex(user => user.id === socket.id);
+
+        if (index !== -1){
+            const user = users.splice(index, 1)[0];
+            if(user){
+                io.emit('message', `${user.username} has left the chat`);
+                io.emit('allUsers', {
+                    users: users
+                });
+            }
+        }
     });
 });
 
