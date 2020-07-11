@@ -10,7 +10,7 @@ export class AppComponent{
   title = 'client';
   newMessage: string;
   messageList: string[] = [];
-  usersList: string[] = [];
+  usersList: any;
 
   constructor(private socketService: SocketService){}
 
@@ -18,8 +18,7 @@ export class AppComponent{
     this.getUsernameAndSend();
     this.socketService.getAllUser()
       .subscribe((data)=>{
-        console.log(data);
-        this.usersList.push(data.users[0].username);
+        this.usersList = data.users.map(a =>a.username);
       });
     this.socketService.getMessage()
       .subscribe((message: string)=>{
