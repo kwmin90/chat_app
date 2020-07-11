@@ -16,9 +16,10 @@ export class AppComponent{
 
   ngOnInit(){
     this.getUsernameAndSend();
-    this.socketService.getUser()
-      .subscribe((user:string)=>{
-        this.usersList.push(user);
+    this.socketService.getAllUser()
+      .subscribe((data)=>{
+        console.log(data);
+        this.usersList.push(data.users[0].username);
       });
     this.socketService.getMessage()
       .subscribe((message: string)=>{
@@ -29,8 +30,6 @@ export class AppComponent{
   sendMessage(){
     this.socketService.sendMessage(this.newMessage);
     this.newMessage= '';
-    
-    console.log(this.messageList);
   }
   getUsernameAndSend(){
     let user = prompt("Please enter your username", "harry potter");
